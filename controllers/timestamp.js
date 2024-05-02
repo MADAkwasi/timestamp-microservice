@@ -1,4 +1,8 @@
-const { isValidDate, isValidUnixTimestamp } = require("../helper/date-checker");
+const dotenv = require("dotenv");
+
+dotenv.config({
+  path: "./config.env",
+});
 
 exports.timestamp = async (req, res) => {
   try {
@@ -27,6 +31,20 @@ exports.noParams = (_, res) => {
     data: {
       unixKey: new Date().getTime() / 1000,
       utcDate: new Date().toISOString(),
+    },
+  });
+};
+
+exports.whoAmI = async (req, res) => {
+  const response = await fetch("https://api.ipify.org?format=json");
+  const { ip } = await response.json();
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      ipaddress: ip,
+      //   language: navigator.language,
+      software: req.headers["user-agent"],
     },
   });
 };
