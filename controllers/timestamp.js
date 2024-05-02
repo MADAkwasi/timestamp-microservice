@@ -43,7 +43,7 @@ exports.whoAmI = async (req, res) => {
     status: "success",
     data: {
       ipaddress: ip,
-      //   language: navigator.language,
+      language: req.headers["accept-language"],
       software: req.headers["user-agent"],
     },
   });
